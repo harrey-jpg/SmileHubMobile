@@ -26,9 +26,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
     _category = productCategories.contains(widget.initialCategory) ? widget.initialCategory : 'All';
   }
 
-  List<Product> get _filtered {
+  List<Product> _filtered(AppController controller) {
     final String normalized = _query.trim().toLowerCase();
-    final List<Product> result = smileHubProducts.where((product) {
+    final List<Product> result = controller.products.where((product) {
       final bool categoryMatch = _category == 'All' || product.category == _category;
       final bool searchMatch = normalized.isEmpty || product.name.toLowerCase().contains(normalized) || product.brand.toLowerCase().contains(normalized);
       return categoryMatch && searchMatch;
@@ -53,7 +53,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     final AppController controller = AppScope.of(context);
-    final List<Product> products = _filtered;
+    final List<Product> products = _filtered(AppScope.read(context));
 
     return MobileScaffold(
       appBar: ScreenTitleBar(

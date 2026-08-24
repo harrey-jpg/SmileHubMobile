@@ -40,6 +40,8 @@ class _SmileHubAppState extends State<SmileHubApp> {
   void initState() {
     super.initState();
     _controller = AppController();
+    // Pull the shared catalog from Firestore (falls back to bundled data).
+    _controller.loadProductsFromFirestore();
   }
 
   @override

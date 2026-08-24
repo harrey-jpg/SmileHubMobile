@@ -12,7 +12,7 @@ class WishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppController controller = AppScope.of(context);
-    final List<Product> items = smileHubProducts.where((product) => controller.wishlist.contains(product.id)).toList();
+    final List<Product> items = controller.products.where((product) => controller.wishlist.contains(product.id)).toList();
 
     return MobileScaffold(
       appBar: ScreenTitleBar(

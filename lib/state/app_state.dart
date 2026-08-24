@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../data/products.dart';
@@ -6,12 +7,77 @@ import '../models/product.dart';
 class AppController extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.light;
 
+  /// Live catalog. Starts with the bundled demo products and is replaced by
+  /// the shared Firestore catalog once it loads.
+  List<Product> products = List<Product>.from(smileHubProducts);
+
   final Set<int> wishlist = <int>{};
   final Map<int, int> cart = <int, int>{};
 
   bool couponApplied = false;
   int selectedAddressIndex = 0;
   int selectedPaymentIndex = 0;
+
+  Future<void> loadProductsFromFirestore() async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance
+              .collection('products')
+              .orderBy('id')
+              .get();
+      if (snapshot.docs.isEmpty) return;
+      final List<Product> loaded = snapshot.docs.map((doc) {
+        final Map<String, dynamic> d = doc.data();
+        final String category =
+            (d['category'] ?? 'General').toString();
+        final int stock = (d['stock'] as num?)?.toInt() ?? 0;
+        return Product(
+          id: (d['id'] as num?)?.toInt() ?? 0,
+          name: (d['name'] ?? 'Unnamed product').toString(),
+          brand: (d['brand'] ?? '').toString(),
+          category: category,
+          price: ((d['price'] as num?) ?? 0).toDouble(),
+          icon: iconForCategory(category),
+          rating: ((d['rating'] as num?) ?? 4.5).toDouble(),
+          stock: stock == 0
+              ? 'Out of stock'
+              : stock <= 10
+                  ? 'Low stock'
+                  : 'In stock',
+          description: (d['description'] ?? '').toString(),
+        );
+      }).toList();
+      if (loaded.isNotEmpty) {
+        products = loaded;
+        notifyListeners();
+      }
+    } catch (_) {
+      // Offline or denied: keep the bundled fallback catalog.
+    }
+  }
+
+  static IconData iconForCategory(String category) {
+    switch (category) {
+      case 'Oral Care':
+        return Icons.cleaning_services_rounded;
+      case 'Instruments':
+        return Icons.construction_rounded;
+      case 'PPE':
+        return Icons.masks_rounded;
+      case 'Restorative':
+        return Icons.vaccines_rounded;
+      case 'Disposables':
+        return Icons.layers_rounded;
+      case 'Impression':
+        return Icons.view_in_ar_rounded;
+      case 'Orthodontics':
+        return Icons.radio_button_unchecked_rounded;
+      case 'Equipment':
+        return Icons.kitchen_rounded;
+      default:
+        return Icons.medical_services_rounded;
+    }
+  }
 
   final List<ShippingAddress> addresses = <ShippingAddress>[
     const ShippingAddress(
@@ -51,9 +117,9 @@ class AppController extends ChangeNotifier {
   bool get isDarkMode => themeMode == ThemeMode.dark;
 
   Product productById(int id) {
-    return smileHubProducts.firstWhere(
+    return products.firstWhere(
       (product) => product.id == id,
-      orElse: () => smileHubProducts.first,
+      orElse: () => products.isNotEmpty ? products.first : smileHubProducts.first,
     );
   }
 

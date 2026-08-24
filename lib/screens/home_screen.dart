@@ -13,8 +13,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppController controller = AppScope.of(context);
-    final List<Product> featured = smileHubProducts.where((p) => <int>{1, 5, 9, 29}.contains(p.id)).toList();
-    final List<Product> latest = smileHubProducts.skip(20).take(6).toList();
+    final List<Product> featured =
+        controller.products.where((p) => <int>{1, 5, 9, 29}.contains(p.id)).toList();
+    final int skip = controller.products.length > 6 ? controller.products.length - 6 : 0;
+    final List<Product> latest = controller.products.skip(skip).take(6).toList();
 
     return MobileScaffold(
       bottomNavigationBar: const MainBottomNavigation(currentIndex: 0),
