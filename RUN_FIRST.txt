@@ -1,0 +1,19 @@
+SMILEHUB FLUTTER - FIRST RUN
+
+1. Install Flutter: https://docs.flutter.dev/install
+2. Extract this ZIP.
+3. Open the extracted smilehub_flutter folder in VS Code or Android Studio.
+4. Open a terminal inside the folder.
+5. Run:
+
+   flutter create . --platforms=android,web
+   flutter pub get
+   flutter run
+
+For Chrome only:
+
+   flutter run -d chrome
+
+Windows shortcut:
+- RUN_WEB.bat for Chrome
+- RUN_ANDROID.bat for an emulator or connected Android phone

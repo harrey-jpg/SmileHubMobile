@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+
+import '../models/product.dart';
+
+const List<Product> smileHubProducts = [
+  Product(id: 1, name: 'Premium Toothbrush Set', brand: 'SmilePro', category: 'Oral Care', price: 349, icon: Icons.cleaning_services_rounded, rating: 4.8, stock: 'In stock', description: 'A clinic-ready toothbrush set with soft bristles, comfortable grip, and protective travel caps.'),
+  Product(id: 2, name: 'Dental Floss Picks 100s', brand: 'SmilePro', category: 'Oral Care', price: 199, icon: Icons.linear_scale_rounded, rating: 4.6, stock: 'In stock', description: 'Easy-grip floss picks for everyday interdental cleaning and patient oral-care kits.'),
+  Product(id: 3, name: 'Fluoride Toothpaste 150g', brand: 'SmilePro', category: 'Oral Care', price: 165, icon: Icons.science_rounded, rating: 4.7, stock: 'In stock', description: 'Fluoride toothpaste for daily cavity protection and fresh breath.'),
+  Product(id: 4, name: 'Mouthwash Fresh Mint 500ml', brand: 'SmilePro', category: 'Oral Care', price: 225, icon: Icons.local_drink_rounded, rating: 4.5, stock: 'In stock', description: 'Refreshing alcohol-free mouthwash for daily clinic and home care.'),
+  Product(id: 5, name: 'Dental Mirror Set', brand: 'Clinix', category: 'Instruments', price: 599, icon: Icons.search_rounded, rating: 4.9, stock: 'In stock', description: 'Stainless-steel dental mirrors with ergonomic handles for clinical examination.'),
+  Product(id: 6, name: 'Explorer Probe Set', brand: 'Clinix', category: 'Instruments', price: 520, icon: Icons.construction_rounded, rating: 4.7, stock: 'In stock', description: 'Precision explorer and probe set for routine diagnostic procedures.'),
+  Product(id: 7, name: 'College Tweezers', brand: 'Clinix', category: 'Instruments', price: 280, icon: Icons.architecture_rounded, rating: 4.6, stock: 'In stock', description: 'Fine-tip college tweezers for handling cotton and small dental materials.'),
+  Product(id: 8, name: 'Scaler Set 6pcs', brand: 'Clinix', category: 'Instruments', price: 1290, icon: Icons.handyman_rounded, rating: 4.8, stock: 'Low stock', description: 'Six-piece stainless scaler set for prophylaxis and periodontal procedures.'),
+  Product(id: 9, name: 'Nitrile Gloves 100s', brand: 'SafeTouch', category: 'PPE', price: 425, icon: Icons.back_hand_rounded, rating: 4.9, stock: 'In stock', description: 'Powder-free nitrile gloves with comfortable fit and strong puncture resistance.'),
+  Product(id: 10, name: 'Surgical Face Masks 50s', brand: 'SafeTouch', category: 'PPE', price: 285, icon: Icons.masks_rounded, rating: 4.7, stock: 'In stock', description: 'Three-ply surgical masks for clinic staff, patients, and daily protection.'),
+  Product(id: 11, name: 'Disposable Face Shields 10s', brand: 'SafeTouch', category: 'PPE', price: 390, icon: Icons.shield_rounded, rating: 4.6, stock: 'In stock', description: 'Clear lightweight face shields for added splash protection.'),
+  Product(id: 12, name: 'Isolation Gowns 10s', brand: 'SafeTouch', category: 'PPE', price: 620, icon: Icons.checkroom_rounded, rating: 4.5, stock: 'In stock', description: 'Breathable disposable isolation gowns for dental and healthcare settings.'),
+  Product(id: 13, name: 'Composite Syringe A2', brand: 'Restora', category: 'Restorative', price: 780, icon: Icons.vaccines_rounded, rating: 4.8, stock: 'In stock', description: 'Light-cure universal composite in a versatile A2 shade.'),
+  Product(id: 14, name: 'Universal Bonding Agent 5ml', brand: 'Restora', category: 'Restorative', price: 1250, icon: Icons.biotech_rounded, rating: 4.8, stock: 'In stock', description: 'Reliable universal bonding agent for direct and indirect restorations.'),
+  Product(id: 15, name: 'Etching Gel 5ml', brand: 'Restora', category: 'Restorative', price: 295, icon: Icons.colorize_rounded, rating: 4.6, stock: 'In stock', description: 'Controlled-flow phosphoric acid etching gel for restorative procedures.'),
+  Product(id: 16, name: 'Glass Ionomer Cement Kit', brand: 'Restora', category: 'Restorative', price: 1480, icon: Icons.inventory_2_rounded, rating: 4.7, stock: 'Low stock', description: 'Complete glass ionomer restorative kit with powder, liquid, and accessories.'),
+  Product(id: 17, name: 'Dental Bibs 125s', brand: 'SafeTouch', category: 'Disposables', price: 420, icon: Icons.layers_rounded, rating: 4.8, stock: 'In stock', description: 'Absorbent disposable dental bibs with water-resistant backing.'),
+  Product(id: 18, name: 'Saliva Ejectors 100s', brand: 'SafeTouch', category: 'Disposables', price: 260, icon: Icons.waves_rounded, rating: 4.6, stock: 'In stock', description: 'Flexible low-volume saliva ejectors with smooth rounded tips.'),
+  Product(id: 19, name: 'Microbrush Applicators 100s', brand: 'SafeTouch', category: 'Disposables', price: 220, icon: Icons.brush_rounded, rating: 4.7, stock: 'In stock', description: 'Fine disposable applicators for bonding agents, etchants, and liners.'),
+  Product(id: 20, name: 'Cotton Rolls 500s', brand: 'SafeTouch', category: 'Disposables', price: 310, icon: Icons.cloud_rounded, rating: 4.7, stock: 'In stock', description: 'Highly absorbent cotton rolls for moisture control during procedures.'),
+  Product(id: 21, name: 'Alginate Impression 1kg', brand: 'Impressa', category: 'Impression', price: 720, icon: Icons.takeout_dining_rounded, rating: 4.9, stock: 'In stock', description: 'Fast-setting dust-free alginate with smooth mixing and accurate detail.'),
+  Product(id: 22, name: 'VPS Putty 600ml', brand: 'Impressa', category: 'Impression', price: 1850, icon: Icons.view_in_ar_rounded, rating: 4.8, stock: 'Low stock', description: 'High-viscosity VPS putty for precise two-step impression techniques.'),
+  Product(id: 23, name: 'Impression Trays Set', brand: 'Impressa', category: 'Impression', price: 680, icon: Icons.sentiment_satisfied_alt_rounded, rating: 4.7, stock: 'In stock', description: 'Reusable perforated impression trays in assorted adult sizes.'),
+  Product(id: 24, name: 'Mixing Bowls and Spatula Set', brand: 'Impressa', category: 'Impression', price: 350, icon: Icons.rice_bowl_rounded, rating: 4.5, stock: 'In stock', description: 'Flexible rubber bowls and spatulas for alginate and gypsum mixing.'),
+  Product(id: 25, name: 'Orthodontic Wax 10s', brand: 'SmilePro', category: 'Orthodontics', price: 250, icon: Icons.widgets_rounded, rating: 4.7, stock: 'In stock', description: 'Patient-friendly orthodontic relief wax in individual hygienic cases.'),
+  Product(id: 26, name: 'Elastic Ligatures 1040s', brand: 'SmilePro', category: 'Orthodontics', price: 480, icon: Icons.radio_button_unchecked_rounded, rating: 4.6, stock: 'In stock', description: 'Color-assorted elastic ligatures for orthodontic bracket systems.'),
+  Product(id: 27, name: 'Cheek Retractor Set', brand: 'Clinix', category: 'Orthodontics', price: 320, icon: Icons.mood_rounded, rating: 4.7, stock: 'In stock', description: 'Clear autoclavable cheek retractors for photography and procedures.'),
+  Product(id: 28, name: 'Bracket Positioning Gauge', brand: 'Clinix', category: 'Orthodontics', price: 690, icon: Icons.straighten_rounded, rating: 4.8, stock: 'In stock', description: 'Precision gauge for consistent orthodontic bracket placement.'),
+  Product(id: 29, name: 'LED Curing Light Pro', brand: 'LumaDent', category: 'Equipment', price: 3499, icon: Icons.flashlight_on_rounded, rating: 4.9, stock: 'In stock', description: 'Professional-grade curing light with three modes, digital timer, and ergonomic lightweight body.'),
+  Product(id: 30, name: 'Ultrasonic Scaler Compact', brand: 'LumaDent', category: 'Equipment', price: 5990, icon: Icons.electric_bolt_rounded, rating: 4.8, stock: 'Low stock', description: 'Compact ultrasonic scaler with adjustable power and water control.'),
+  Product(id: 31, name: 'Digital Apex Locator', brand: 'LumaDent', category: 'Equipment', price: 6450, icon: Icons.monitor_heart_rounded, rating: 4.7, stock: 'In stock', description: 'Accurate apex location with clear color display and stable measurements.'),
+  Product(id: 32, name: 'Class B Autoclave 18L', brand: 'LumaDent', category: 'Equipment', price: 38500, icon: Icons.kitchen_rounded, rating: 4.9, stock: 'Pre-order', description: 'Compact Class B sterilizer with multiple cycles and digital monitoring.'),
+];
+
+const List<String> productCategories = [
+  'All',
+  'Oral Care',
+  'Instruments',
+  'PPE',
+  'Restorative',
+  'Disposables',
+  'Impression',
+  'Orthodontics',
+  'Equipment',
+];

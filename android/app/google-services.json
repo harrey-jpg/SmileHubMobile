@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "932243276700",
+    "project_id": "smilehub-1c44a",
+    "storage_bucket": "smilehub-1c44a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932243276700:android:c3dfb32e2751870458fe59",
+        "android_client_info": {
+          "package_name": "com.example.smilehub_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPPPi-oQElzk9CBBeDf-I_xpCJ2DIDSl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
