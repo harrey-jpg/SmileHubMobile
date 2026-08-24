@@ -1,4 +1,4 @@
-package com.example.smilehub_flutter
+package com.smilehub.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

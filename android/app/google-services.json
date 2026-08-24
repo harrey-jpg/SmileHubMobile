@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "932243276700",
-    "project_id": "smilehub-1c44a",
-    "storage_bucket": "smilehub-1c44a.firebasestorage.app"
+    "project_number": "177683041939",
+    "project_id": "smilehub-ecommerce",
+    "storage_bucket": "smilehub-ecommerce.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:932243276700:android:c3dfb32e2751870458fe59",
+        "mobilesdk_app_id": "1:177683041939:android:3c4696c4c357065f4ec766",
         "android_client_info": {
-          "package_name": "com.example.smilehub_flutter"
+          "package_name": "com.smilehub.mobile"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "177683041939-p3pev273hdhdhensdqf9evbugama58ll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDPPPi-oQElzk9CBBeDf-I_xpCJ2DIDSl4"
+          "current_key": "AIzaSyCKynaD7iCCImV9chgJWELCd9cHBSaDk_o"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177683041939-p3pev273hdhdhensdqf9evbugama58ll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
