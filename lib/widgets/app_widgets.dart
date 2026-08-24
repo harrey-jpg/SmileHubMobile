@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../models/product.dart';
 import '../state/app_state.dart';
@@ -242,14 +243,19 @@ class ProductArt extends StatelessWidget {
     return Container(
       width: size,
       height: size,
+      padding: EdgeInsets.all(size * 0.12),
       decoration: BoxDecoration(
         color: dark ? const Color(0xFF152744) : const Color(0xFFE9F1FF),
         borderRadius: BorderRadius.circular(size * 0.18),
       ),
-      child: Icon(
-        product.icon,
-        size: size * 0.48,
-        color: dark ? AppColors.aqua : AppColors.teal,
+      child: SvgPicture.asset(
+        product.imageAsset,
+        fit: BoxFit.contain,
+        placeholderBuilder: (context) => Icon(
+          product.icon,
+          size: size * 0.48,
+          color: dark ? AppColors.aqua : AppColors.teal,
+        ),
       ),
     );
   }

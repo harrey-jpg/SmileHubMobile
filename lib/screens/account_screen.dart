@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../routes.dart';
 import '../services/auth_service.dart';
+import '../services/order_service.dart';
 import '../services/profile_service.dart';
 import '../state/app_state.dart';
 import '../theme/app_theme.dart';
@@ -197,63 +199,140 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
           ),
           const SizedBox(height: 18),
-          AppCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Latest Order',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.w900,
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: OrderService().watchMyOrders(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (snapshot.hasError) {
+                return const AppCard(
+                  child: Text('Unable to load your latest order.'),
+                );
+              }
+              if (!snapshot.hasData) {
+                return const AppCard(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              final List<QueryDocumentSnapshot<Map<String, dynamic>>> docs =
+                  snapshot.data!.docs;
+              if (docs.isEmpty) {
+                return AppCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Latest Order',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
                             ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const Chip(
-                      label: Text('Processing'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  '#SH-2026-0148',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '2 dental products',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const Divider(height: 24),
-                Row(
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'Total',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(AppRoutes.orders),
+                        child: Text(
+                          'No orders yet. Tap here to view your orders.',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
                         ),
                       ),
+                    ],
+                  ),
+                );
+              }
+
+              QueryDocumentSnapshot<Map<String, dynamic>> latest = docs.first;
+              for (final QueryDocumentSnapshot<Map<String, dynamic>> doc
+                  in docs) {
+                final DateTime? docDate =
+                    (doc.data()['createdAt'] as Timestamp?)?.toDate();
+                final DateTime? latestDate =
+                    (latest.data()['createdAt'] as Timestamp?)?.toDate();
+                if (docDate != null &&
+                    (latestDate == null || docDate.isAfter(latestDate))) {
+                  latest = doc;
+                }
+              }
+              final Map<String, dynamic> data = latest.data();
+              final String status =
+                  data['status']?.toString() ?? 'Pending';
+              final String number =
+                  data['orderNumber']?.toString() ?? '—';
+              final int itemCount =
+                  (data['itemCount'] as num?)?.toInt() ?? 0;
+              final double total = (data['total'] as num?)?.toDouble() ?? 0;
+
+              return AppCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Latest Order',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                ),
+                          ),
+                        ),
+                        Chip(label: Text(status)),
+                      ],
                     ),
+                    const SizedBox(height: 8),
                     Text(
-                      '₱3,694.10',
-                      style: TextStyle(
-                        color:
-                            Theme.of(context).colorScheme.primary,
+                      '#$number',
+                      style: const TextStyle(
                         fontWeight: FontWeight.w900,
                       ),
                     ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '$itemCount item${itemCount == 1 ? '' : 's'}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const Divider(height: 24),
+                    Row(
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            'Total',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '₱${total.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            color:
+                                Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
           const SizedBox(height: 22),
           Text(

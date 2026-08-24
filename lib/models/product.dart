@@ -22,6 +22,20 @@ class Product {
   final double rating;
   final String stock;
   final String description;
+
+  /// Placeholder artwork shared with the web store (assets/products/*.svg).
+  String get imageAsset => 'assets/products/${_assetByCategory[category] ?? 'default.svg'}';
+
+  static const Map<String, String> _assetByCategory = <String, String>{
+    'Oral Care': 'oral-care.svg',
+    'Instruments': 'instrument.svg',
+    'PPE': 'ppe.svg',
+    'Restorative': 'restorative.svg',
+    'Disposables': 'disposable.svg',
+    'Impression': 'impression.svg',
+    'Orthodontics': 'orthodontic.svg',
+    'Equipment': 'equipment.svg',
+  };
 }
 
 class ShippingAddress {
