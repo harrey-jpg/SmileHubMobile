@@ -37,6 +37,21 @@ class AuthService {
       'updatedAt': FieldValue.serverTimestamp(),
     });
 
+    // Mirror into the accounts collection so the record shows up in the
+    // web admin's Account Management (same as web registrations).
+    try {
+      await _firestore.collection('accounts').doc(email.trim()).set(
+        <String, dynamic>{
+          'name': fullName.trim(),
+          'email': email.trim(),
+          'role': 'customer',
+          'status': 'active',
+        },
+      );
+    } catch (_) {
+      // Non-fatal: admins still see this account via the users collection.
+    }
+
     return credential;
   }
 
