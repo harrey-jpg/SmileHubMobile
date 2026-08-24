@@ -59,7 +59,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
       appBar: ScreenTitleBar(
         title: 'Product Catalog',
         actions: [
-          IconButton(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.wishlist), icon: const Icon(Icons.favorite_border_rounded)),
+          WishlistBadgeIcon(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.wishlist)),
           CartBadgeIcon(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.cart)),
         ],
       ),

@@ -42,10 +42,7 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Expanded(child: SmileHubLogo(compact: true, centered: false)),
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pushNamed(AppRoutes.wishlist),
-                        icon: const Icon(Icons.favorite_border_rounded),
-                      ),
+                      WishlistBadgeIcon(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.wishlist)),
                       CartBadgeIcon(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.cart)),
                     ],
                   ),

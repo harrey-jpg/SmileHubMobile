@@ -1,42 +1,56 @@
-# SmileHub Flutter App
+# SmileHub Mobile (Flutter)
 
-A complete, clickable Flutter version of the SmileHub dental supplies mobile UI.
+Flutter companion app for **SmileHub Dental Supplies**, connected to the same
+Firebase project (`smilehub-ecommerce`) as the web store — accounts, products,
+orders, carts, and wishlists are shared with the website.
 
-## Included
+## Features
 
-- Onboarding, Login, and Sign Up
-- Scrollable Home screen
-- 32-product catalog with search and category filters
+- Onboarding, Login, and Sign Up (Firebase Auth)
+- Home screen and product catalog with search and category filters
 - Product details, quantity selector, wishlist, and cart
 - Coupon, checkout, shipping address, and payment method flows
 - Order success and account/orders
 - Personal information, saved addresses, payment methods
 - Help and contact support
-- Working light/dark mode toggle
-- Responsive mobile layout that also runs on Flutter Web
+- Light/dark mode toggle
+- Runs on Android and Flutter Web
 
-## Run on Windows
+## Firebase setup
 
-1. Install Flutter and Android Studio or Chrome.
-2. Extract this folder.
-3. Open the folder in VS Code or Android Studio.
-4. Open Terminal in the project folder.
-5. Run:
+This app is bound to the `smilehub-ecommerce` Firebase project:
+
+- `lib/firebase_options.dart` — web + Android options
+- `android/app/google-services.json` — Android config (package: `com.smilehub.mobile`)
+- Android application ID / namespace: `com.smilehub.mobile`
+
+If the Firebase config ever needs regenerating, run `flutterfire configure`.
+
+## Run
+
+Requires Flutter installed. From this folder:
 
 ```bash
-flutter create . --platforms=android,web
 flutter pub get
-flutter run
-```
-
-For Chrome:
-
-```bash
-flutter run -d chrome
+flutter run                # Android device or emulator
+flutter run -d chrome      # Web
 ```
 
 You can also double-click `RUN_WEB.bat` or `RUN_ANDROID.bat`.
 
-## Main app code
+## Project structure
 
-All source code is inside `lib/`. The project intentionally uses only Flutter SDK widgets, so no third-party state-management or routing package is required.
+```
+lib/
+  main.dart            App entry point (Firebase initialization)
+  app.dart             Root widget and theme wiring
+  routes.dart          Named routes
+  firebase_options.dart
+  data/                Static fallback data
+  models/              Product model
+  screens/             All app screens
+  services/            Auth, orders, addresses, profile services
+  state/               Shared app state
+  theme/               Light/dark themes
+  widgets/             Reusable widgets
+```

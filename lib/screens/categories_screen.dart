@@ -24,7 +24,7 @@ class CategoriesScreen extends StatelessWidget {
         title: 'Categories',
         showBack: false,
         actions: [
-          IconButton(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.wishlist), icon: const Icon(Icons.favorite_border_rounded)),
+          WishlistBadgeIcon(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.wishlist)),
           CartBadgeIcon(onPressed: () => Navigator.of(context).pushNamed(AppRoutes.cart)),
         ],
       ),

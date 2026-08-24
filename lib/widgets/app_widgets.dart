@@ -386,13 +386,54 @@ class CartBadgeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int count = AppScope.of(context).cartCount;
-    return Stack(
+    final int count = AppScope.of(context).cartCount;    return Stack(
       clipBehavior: Clip.none,
       children: [
         IconButton(
           onPressed: onPressed,
           icon: const Icon(Icons.shopping_cart_outlined),
+        ),
+        if (count > 0)
+          Positioned(
+            right: 2,
+            top: 1,
+            child: Container(
+              constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              decoration: const BoxDecoration(
+                color: AppColors.danger,
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                '$count',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class WishlistBadgeIcon extends StatelessWidget {
+  const WishlistBadgeIcon({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final int count = AppScope.of(context).wishlist.length;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        IconButton(
+          onPressed: onPressed,
+          icon: const Icon(Icons.favorite_border_rounded),
         ),
         if (count > 0)
           Positioned(
@@ -445,18 +486,27 @@ class MainBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int wishCount = AppScope.of(context).wishlist.length;
+    Widget wishlistIcon = const Icon(Icons.favorite_border_rounded);
+    Widget wishlistSelectedIcon = const Icon(Icons.favorite_rounded);
+    if (wishCount > 0) {
+      Badge badgeFor(IconData icon) =>
+          Badge(label: Text('$wishCount'), child: Icon(icon));
+      wishlistIcon = badgeFor(Icons.favorite_border_rounded);
+      wishlistSelectedIcon = badgeFor(Icons.favorite_rounded);
+    }
     return NavigationBar(
       selectedIndex: currentIndex,
       onDestinationSelected: (index) {
         if (index == currentIndex) return;
         Navigator.of(context).pushNamed(_routes[index]);
       },
-      destinations: const [
-        NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home_rounded), label: 'Home'),
-        NavigationDestination(icon: Icon(Icons.grid_view_outlined), selectedIcon: Icon(Icons.grid_view_rounded), label: 'Categories'),
-        NavigationDestination(icon: Icon(Icons.favorite_border_rounded), selectedIcon: Icon(Icons.favorite_rounded), label: 'Wishlist'),
-        NavigationDestination(icon: Icon(Icons.receipt_long_outlined), selectedIcon: Icon(Icons.receipt_long_rounded), label: 'Orders'),
-        NavigationDestination(icon: Icon(Icons.person_outline_rounded), selectedIcon: Icon(Icons.person_rounded), label: 'Profile'),
+      destinations: [
+        const NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home_rounded), label: 'Home'),
+        const NavigationDestination(icon: Icon(Icons.grid_view_outlined), selectedIcon: Icon(Icons.grid_view_rounded), label: 'Categories'),
+        NavigationDestination(icon: wishlistIcon, selectedIcon: wishlistSelectedIcon, label: 'Wishlist'),
+        const NavigationDestination(icon: Icon(Icons.receipt_long_outlined), selectedIcon: Icon(Icons.receipt_long_rounded), label: 'Orders'),
+        const NavigationDestination(icon: Icon(Icons.person_outline_rounded), selectedIcon: Icon(Icons.person_rounded), label: 'Profile'),
       ],
     );
   }
