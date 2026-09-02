@@ -6,6 +6,10 @@ import 'screens/account_screen.dart';
 import 'screens/add_address_screen.dart';
 import 'screens/add_payment_screen.dart';
 import 'screens/addresses_screen.dart';
+import 'screens/admin/admin_customers_screen.dart';
+import 'screens/admin/admin_dashboard_screen.dart';
+import 'screens/admin/admin_orders_screen.dart';
+import 'screens/admin/admin_products_screen.dart';
 import 'screens/cart_screen.dart';
 import 'screens/catalog_screen.dart';
 import 'screens/categories_screen.dart';
@@ -169,6 +173,15 @@ class _SmileHubAppState extends State<SmileHubApp> {
             ? arguments
             : 'Order concern',
       );
+    } else if (settings.name == AppRoutes.admin ||
+        settings.name == AppRoutes.adminDashboard) {
+      page = const AdminDashboardScreen();
+    } else if (settings.name == AppRoutes.adminOrders) {
+      page = const AdminOrdersScreen();
+    } else if (settings.name == AppRoutes.adminProducts) {
+      page = const AdminProductsScreen();
+    } else if (settings.name == AppRoutes.adminCustomers) {
+      page = const AdminCustomersScreen();
     } else {
       page = const OnboardingScreen();
     }

@@ -14,6 +14,8 @@ class OrderService {
     'Cancelled',
   ];
 
+  static const List<String> _adminRoles = <String>['admin', 'staff', 'superadmin'];
+
   Future<User> _requireAdmin() async {
     final User? user = _auth.currentUser;
 
@@ -33,7 +35,7 @@ class OrderService {
                 .toLowerCase() ??
             '';
 
-    if (role != 'admin') {
+    if (!_adminRoles.contains(role)) {
       throw StateError('Admin access required.');
     }
 

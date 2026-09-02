@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../routes.dart';
+import '../services/admin_service.dart';
 import '../services/auth_service.dart';
 import '../services/order_service.dart';
 import '../services/profile_service.dart';
@@ -18,15 +19,38 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   final ProfileService _profileService = ProfileService();
+  final AdminService _adminService = AdminService();
 
   String _fullName = 'SmileHub User';
   String _buyerType = 'Customer';
   bool _isLoadingProfile = true;
+  String? _userRole;
+  bool _checkingRole = true;
 
   @override
   void initState() {
     super.initState();
     _loadProfile();
+    _loadRole();
+  }
+
+  Future<void> _loadRole() async {
+    try {
+      final String? role = await _adminService.getCurrentUserRole();
+      if (!mounted) return;
+      setState(() {
+        _userRole = role;
+        _checkingRole = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _checkingRole = false);
+    }
+  }
+
+  bool get _isAdmin {
+    final String r = (_userRole ?? '').toLowerCase();
+    return AdminService.adminRoles.contains(r);
   }
 
   String get _initials {
@@ -334,6 +358,54 @@ class _AccountScreenState extends State<AccountScreen> {
               );
             },
           ),
+          if (!_checkingRole && _isAdmin) ...[
+            const SizedBox(height: 18),
+            Text(
+              'Admin Panel',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w900),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'Role: ${(_userRole ?? '').toUpperCase()} — manage store data',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+            ),
+            const SizedBox(height: 10),
+            AppCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  _SettingsRow(
+                    icon: Icons.dashboard_rounded,
+                    label: 'Admin Dashboard',
+                    onTap: () => Navigator.of(context).pushNamed(AppRoutes.adminDashboard),
+                  ),
+                  const Divider(height: 1),
+                  _SettingsRow(
+                    icon: Icons.receipt_long_rounded,
+                    label: 'Manage Orders',
+                    onTap: () => Navigator.of(context).pushNamed(AppRoutes.adminOrders),
+                  ),
+                  const Divider(height: 1),
+                  _SettingsRow(
+                    icon: Icons.inventory_2_rounded,
+                    label: 'Manage Products / Inventory',
+                    onTap: () => Navigator.of(context).pushNamed(AppRoutes.adminProducts),
+                  ),
+                  const Divider(height: 1),
+                  _SettingsRow(
+                    icon: Icons.people_rounded,
+                    label: 'Customers & Accounts',
+                    onTap: () => Navigator.of(context).pushNamed(AppRoutes.adminCustomers),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: 22),
           Text(
             'Account Settings',

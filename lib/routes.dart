@@ -20,6 +20,13 @@ class AppRoutes {
   static const String addPayment = '/add-payment';
   static const String help = '/help';
   static const String contactSupport = '/contact-support';
+
+  // Admin
+  static const String admin = '/admin';
+  static const String adminDashboard = '/admin/dashboard';
+  static const String adminOrders = '/admin/orders';
+  static const String adminProducts = '/admin/products';
+  static const String adminCustomers = '/admin/customers';
 }
 
 
