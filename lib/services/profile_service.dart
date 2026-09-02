@@ -34,11 +34,20 @@ class ProfileService {
     }
 
     final String firestoreName = readString('fullName');
+    final String displayName = readString('displayName');
+    final String firstName = readString('firstName');
+    final String lastName = readString('lastName');
+    final String combinedName = [firstName, lastName].where((s) => s.isNotEmpty).join(' ').trim();
+    final String fallbackName = firestoreName.isNotEmpty
+        ? firestoreName
+        : displayName.isNotEmpty
+            ? displayName
+            : combinedName.isNotEmpty
+                ? combinedName
+                : user.displayName ?? '';
 
     return <String, String>{
-      'fullName': firestoreName.isNotEmpty
-          ? firestoreName
-          : user.displayName ?? '',
+      'fullName': fallbackName,
       'email': user.email ?? readString('email'),
       'mobile': readString('mobile'),
       'clinic': readString('clinic'),
